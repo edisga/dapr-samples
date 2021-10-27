@@ -16,8 +16,8 @@ app.get('/users', (req, res) =>{
             return response.body;
         })
         .catch(err =>{
-            console.log(`Response error: ${err.response.body}`);
-            res.status(500).send({ message: error });
+            console.log(`Response error: ${err}`);
+            res.status(500).send({ message: err });
         });
     })();
 });
@@ -43,8 +43,8 @@ app.post('/orders', (req, res) =>{
             return response.data;
         })
         .catch(err =>{
-            console.log(`Response error: ${err.response.body}`);
-            res.status(500).send({ message: error });
+            console.log(`Response error: ${err}`);
+            res.status(500).send({ message: err });
         });
     })();
 });
