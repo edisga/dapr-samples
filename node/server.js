@@ -4,7 +4,7 @@ const got = require('got');
 const port = process.env.PORT || 3000;
 const daprPort = process.env.DAPR_HTTP_PORT || 3500;
 const stateStoreName = "statestore";
-const stateURL  = `http://localhost:${daprPort}/v1.0/state/${stateStoreName}`;
+const stateUrl = `http://localhost:${daprPort}/v1.0/state/${stateStoreName}`;
 
 app.use(express.json());
 
@@ -24,6 +24,7 @@ app.get('/users', (req, res) =>{
 
 app.post('/orders', (req, res) =>{
     const data = req.body.data;
+    console.log(data);
     const orderId = data.orderId;
     console.log("Got a new order! Order ID: " + orderId);
 
@@ -31,7 +32,7 @@ app.post('/orders', (req, res) =>{
         key: "order",
         value: data
     }];
-    
+
     (async () => {
         await got(stateUrl, {
             json: JSON.stringify(state),
