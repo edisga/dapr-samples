@@ -34,7 +34,7 @@ app.post('/orders', (req, res) =>{
     }];
 
     (async () => {
-        await got(stateUrl, {
+        await got.post(stateUrl, {
             json: JSON.stringify(state),
             responseType: 'json'
         })
