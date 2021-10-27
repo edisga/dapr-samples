@@ -10,30 +10,41 @@ app.use(express.json());
 
 app.get('/users', (req, res) =>{
     (async () => {
-        try {
-            const response = await got(`${ stateUrl }/user`);
+        await got(`${ stateUrl }/user`)
+        .then(response => {
+            console.log(`Response body: ${response.body}`);
             return response.body;
-        } catch (error) {
-            console.log(error.response.body);
+        })
+        .catch(err =>{
+            console.log(`Response error: ${err.response.body}`);
             res.status(500).send({ message: error });
-        }
+        });
     })();
 });
 
-app.post('/users', (req, res) =>{
+app.post('/orders', (req, res) =>{
     const data = req.body.data;
     const orderId = data.orderId;
     console.log("Got a new order! Order ID: " + orderId);
+
     const state = [{
         key: "order",
         value: data
     }];
+    
     (async () => {
-        const {body} = await got.post(stateUrl, {
+        await got(stateUrl, {
             json: JSON.stringify(state),
             responseType: 'json'
+        })
+        .then(response => {
+            console.log(`Response data: ${response.data}`);
+            return response.data;
+        })
+        .catch(err =>{
+            console.log(`Response error: ${err.response.body}`);
+            res.status(500).send({ message: error });
         });
-        console.log(body.data);
     })();
 });
 
